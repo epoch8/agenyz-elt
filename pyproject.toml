@@ -1,0 +1,18 @@
+[tool.poetry]
+name = "agenyz-elt-local"
+version = "0.1.0"
+description = ""
+authors = ["assketick <tuhlin.nekit@yandex.ru>"]
+readme = "README.md"
+packages = [{include = "agenyz_elt_local"}]
+
+[tool.poetry.dependencies]
+python = ">=3.9,<3.10"
+meltano = "^2.16.1"
+prefect = "^2.8.5"
+prefect-shell = "^0.1.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

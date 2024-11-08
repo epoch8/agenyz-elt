@@ -1,0 +1,7 @@
+/venv
+/.meltano
+.env
+.meltano
+/load/*.json
+.idea
+__pycache__

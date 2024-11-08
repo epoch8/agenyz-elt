@@ -1,0 +1,83 @@
+version: 1
+default_environment: prod
+project_id: 37d91c44-401f-46e4-967e-420c64d3f0c3
+environments:
+- name: dev
+
+- name: staging
+
+- name: prod
+
+plugins:
+  extractors:
+  - name: tap-mongodb
+    variant: transferwise
+    pip_url: git+https://github.com/assketick/pipelinewise-tap-mongodb
+    config:
+      password: 1ojfqrOKVykTxyb0
+      user: botfront
+      host: bot-db-mongodb-01
+      database: bf
+      auth_database: bf
+      port: 27017
+    select:
+    - bf-conversations.*
+    - bf-stories.*
+    - bf-storyGroups.*
+    - bf-projects.*
+    load_schema: raw__botfront
+    metadata:
+      '*':
+        replication-method: INCREMENTAL
+        replication-key: updatedAt
+  - name: tap-postgres
+    variant: meltanolabs
+    pip_url: git+https://github.com/MeltanoLabs/tap-postgres.git
+    config:
+      database: chatwoot
+      user: chatwoot
+      host: bot-db-postgres-01
+      password: XF0QnNBLBCecohU0
+      port: 5432
+    select:
+     - "public-users.*"
+     - "public-conversations.*"
+     - "public-messages.*"
+     - "public-inboxes.*"
+     - "public-contacts.*"
+     - "public-agent_bots.*"
+     - "public-reporting_events.*"
+     - "public-conversation_participants.*"
+     - "public-csat_survey_responses.*"
+     - "public-user_events.*"
+     - "public-articles.*"
+     - "public-categories.*"
+    metadata:
+      '*':
+        replication-method: INCREMENTAL
+        replication-key: updated_at
+    load_schema: raw__chatwoot
+  loaders:
+  - name: target-postgres
+    variant: transferwise
+    pip_url: pipelinewise-target-postgres
+    config:
+      add_metadata_columns: true
+      dbname: etl_data
+      user: etl_data
+      host: bot-db-postgres-01
+      password: s640GtRVVCx9zilS
+      port: 5432
+      default_target_schema: ${MELTANO_EXTRACT__LOAD_SCHEMA}
+  utilities:
+  - name: dbt-postgres
+    variant: dbt-labs
+    pip_url: dbt-core~=1.7.0 dbt-postgres~=1.7.0 git+https://github.com/meltano/dbt-ext.git@main
+    config:
+      dbname: etl_data
+      user: etl_data
+      host: bot-db-postgres-01
+      password: s640GtRVVCx9zilS
+      port: 5432
+      schema: bi
+      skip_pre_invoke: true
