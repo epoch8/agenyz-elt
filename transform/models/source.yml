@@ -1,0 +1,59 @@
+version: 2
+
+sources:
+  - name: raw__chatwoot
+    database: etl_data
+    schema: raw__chatwoot
+    tables:
+      - name: users
+        identifier: users
+
+      - name: conversations
+        identifier: conversations
+
+      - name: messages
+        identifier: messages
+
+      - name: inboxes
+        identifier: inboxes
+
+      - name: contacts
+        identifier: contacts
+
+      - name: agent_bots
+        identifier: agent_bots
+
+      - name: reporting_events
+        identifier: reporting_events
+
+      - name: conversation_participants
+        identifier: conversation_participants
+
+      - name: csat_survey_responses
+        identifier: csat_survey_responses
+
+      - name: user_events
+        identifier: user_events
+
+      - name: articles
+        identifier: articles
+
+      - name: categories
+        identifier: categories
+
+  - name: raw__botfront
+    database: etl_data
+    schema: raw__botfront
+    tables:
+      - name: conversations
+        identifier: conversations
+
+      - name: stories
+        identifier: stories
+
+      - name: projects
+        identifier: projects
+
+      - name: storygroups
+        identifier: storygroups
+

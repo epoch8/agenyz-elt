@@ -26,6 +26,7 @@ class ShellProcessStdErr(ShellProcess):
             f"PID {self.pid} completed with return code {self.return_code}."
         )
 
+
 class ShellOperationStdErr(ShellOperation):
     @sync_compatible
     async def run(self, **open_kwargs: Dict[str, Any]) -> List[str]:
@@ -43,8 +44,7 @@ class ShellOperationStdErr(ShellOperation):
         return result
 
 
-
-@task(name="meltano_elt", task_run_name="{project_name}-{environment}-{extractor}-{loader}")
+@task(name="meltano_elt", task_run_name="agenyz-elt-{environment}-{extractor}-{loader}")
 def meltano_elt(environment: str, extractor: str, loader: str, full_refresh=False, log_level=False):
     elt_command = f"meltano {'--log-level debug' if log_level else ''} --environment {environment} run {extractor} {loader}"
     if full_refresh:
@@ -61,12 +61,11 @@ def meltano_elt(environment: str, extractor: str, loader: str, full_refresh=Fals
     return res 
 
 
-
-
-@task(name="meltano_dbt", task_run_name="{project_name}-{environment}-dbt-{dbt_args}")
+@task(name="meltano_dbt", task_run_name="agenyz-elt-{environment}-dbt-{dbt_args}")
 def meltano_dbt(environment: str, dbt_args: str = ""):
-    command = f"meltano --environment {environment} invoke dbt-postgres run {dbt_args} "
+    command = f"meltano --environment {environment} invoke dbt-postgres run {dbt_args}"
     res = ShellOperation(
         commands=[command],
     ).run()
-    return res 
+    return res
+

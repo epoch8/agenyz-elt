@@ -6,20 +6,18 @@ from tasks import meltano_dbt, meltano_elt
 @flow(name=f"{PROJECT_NAME} elt")
 def elt(log_level=False, dbt_args="", full_refresh=False):
     meltano_elt(
-        PROJECT_NAME,
-        "prod",
-        "tap-mongodb",
-        "target-postgres",
+        environment="prod",
+        extractor="tap-mongodb",
+        loader="target-postgres",
+        log_level=log_level,
     )
     meltano_elt(
-        PROJECT_NAME,
-        "prod",
-        "tap-postgres",
-        "target-postgres",
+        environment="prod",
+        extractor="tap-postgres",
+        loader="target-postgres",
+        log_level=log_level,
     )
     meltano_dbt(
-        PROJECT_NAME,
-        "prod",
+        environment="prod",
         dbt_args=dbt_args,
-        full_refresh=full_refresh,
     )

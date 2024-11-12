@@ -1,6 +1,6 @@
 version: 1
 default_environment: prod
-project_id: 37d91c44-401f-46e4-967e-420c64d3f0c3
+project_id: 1e8e63e9-28af-4afb-9ed0-5909933c6ab6
 environments:
 - name: dev
 
@@ -16,7 +16,7 @@ plugins:
     config:
       password: 1ojfqrOKVykTxyb0
       user: botfront
-      host: bot-db-mongodb-01
+      host: 172.17.250.60 # bot-db-mongodb-01
       database: bf
       auth_database: bf
       port: 27017
@@ -36,7 +36,7 @@ plugins:
     config:
       database: chatwoot
       user: chatwoot
-      host: bot-db-postgres-01
+      host: 172.17.250.62 # bot-db-postgres-01
       password: XF0QnNBLBCecohU0
       port: 5432
     select:
@@ -65,7 +65,7 @@ plugins:
       add_metadata_columns: true
       dbname: etl_data
       user: etl_data
-      host: bot-db-postgres-01
+      host: 172.17.250.62 # bot-db-postgres-01
       password: s640GtRVVCx9zilS
       port: 5432
       default_target_schema: ${MELTANO_EXTRACT__LOAD_SCHEMA}
@@ -76,7 +76,7 @@ plugins:
     config:
       dbname: etl_data
       user: etl_data
-      host: bot-db-postgres-01
+      host: 172.17.250.62 # bot-db-postgres-01
       password: s640GtRVVCx9zilS
       port: 5432
       schema: bi
