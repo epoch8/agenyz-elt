@@ -1,0 +1,1 @@
+alias dbt='meltano invoke dbt-postgres'
